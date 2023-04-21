@@ -1,0 +1,115 @@
+#Criando uma calculadora em python
+from tkinter import *
+from tkinter import ttk
+#Etapas para criar a calculadora:
+#1 Etapa: Criar e exportar as bibliotecas necessarias
+#2 Etapa: Criar a janela e fazer configurações basicas (tamanho, titulo, cor...)
+#3 Etapa: Dividindo a janela em dois quadros e fazer a configuração dos dois
+#4 Etapa: Criando os botões e colocando no frame de baixo, usaremos o "place"
+#5 Etapa: Definindo cor e tamanho dos botões 
+#6 Etapa: Definindo as configurações da calculadora "nesse caso operações matematicas"
+
+#cores utilizadas na calculadora    
+cor1 = '#464a4a' #cinza
+cor2 = '#15bfbf' #Azul ciano
+cor3 = '#375e5e' ##Azul meio escuro
+cor4 = '#feffff' #Branca
+cor5 = '#f5971d' #Laranja
+#"Design da calculadora"
+janela = Tk() #Criando uma janela com tkinter
+janela.title('Calculadora') #Titulo da janela 
+janela.geometry('300x460') #Aderindo tamanhno a calculadora
+janela.config(bg=cor4) #Definindo a cor de fundo da janela nesse caso cor branca
+
+#criando o frame de de cima
+framecima = Frame(janela, width=400, height= 100, bg= cor1) #dividindo a janela em 2 frames, vai ser dividida com width"Largura" e height"comprimento e o 'bg' que coloca a cor no frame de cima
+framecima.grid(row=0, column= 0) #Colocando a "Grade" dividindo a calculadora
+
+#criando o frame de de baixo
+framebaixo = Frame(janela, width=400, height= 500, bg= cor4) #dividindo a janela em 2 frames, vai ser dividida com width"Largura" e height"comprimento e o 'bg' que coloca a cor no frame de baixo
+framebaixo.grid(row=1, column= 0) #Colocando a "Grade" dividindo a calculadora na linha 2 e na coluna 1
+
+#criando função para dar funcionalidade a calculadora
+
+todosvalores = '' # =Definindo a variavel todos os valores
+#Pra poder usar o comando set, precisamos criar uma variavel pra receber o valor em str
+
+valor_texto = StringVar() #Variavel pra receber o valor string 
+
+def entrada(a):
+
+    global todosvalores #Defini essa variavel "todosvalores" como valores global
+    todosvalores = todosvalores + str(a) #todos os valores recebidos vão ser concatenados, se eu colocar qualquer valor vai ser armazenado na variavel
+    #todosvalores fora da função, e vai aparecer na tela
+
+    #resultado =  eval(todosvalores)#o comando 'eval' vai ser utilizado para fazer as operações matematicas 
+
+    #Passando o valor para a tela
+    valor_texto.set(todosvalores) 
+
+#Criando uma nova função para usar o "eval", ou seja, para poder fazer as operações matematicas
+
+def calcular():
+    global todosvalores
+    resultado = eval(todosvalores) #o "eval" faz as contas matematicas, criei a variavel resultado para usar o "eval" na função "todosvalores"
+    valor_texto.set(str(resultado)) #Setando o valor_texto para aparecer o resultado na tela
+    todosvalores = str(resultado) #atualizando a função todos valores apenas com o resultado
+    #Criando uma função para limpar tela ao clickar no "="
+    todosvalores = ""
+
+def limpartela():  #Função limpartela ao clickar no '='
+    global todosvalores #Definindo aqui a variavel global todosvalores
+    todosvalores = '' #Quando clikar no botão '=' vai limpar a tudo que for escrito na tela
+    valor_texto.set('')
+
+
+#criando label
+tela = Label(framecima, textvariable =  valor_texto, width= 19, height= 4, padx=5, relief=FLAT, anchor= 'e', justify=RIGHT, font= ('Ivy 18  bold'), bg=cor1, fg=cor4) #Criando o que vai aparecer na tela com "textvariable" texto variavel
+tela.place(x = 0, y = 0)
+
+#Criando botões da calculadora
+#Colocando funcionalidade no botão com o comando "command=" e ele vai receber a função lambda que vai receber nossa função entrada
+b1 = Button(framebaixo, command=limpartela, text = 'C', width= 20, height=4, bg= cor5, fg=cor4, font = ('Ivy 10 bold '), relief= RAISED, overrelief=RIDGE ) #Defini um botão com o texto "C", defini tamanho de largura e comprimento, cor do background, frontgraude, defini a fonte para "ivy" e estilo RAISED e coloquei o overrelife pra quando passar o mouse em cima destacar
+b1.place(x = 0, y = 0) # Colocando o botão nas cordenadas 0 x 0... Chamando o a função limpartela e usando como comando
+b2 = Button(framebaixo,command= lambda: entrada('%') , text = '%', width= 9, height=4, bg= cor5, fg=cor4, font = ('Ivy 10 bold '), relief= RAISED, overrelief=RIDGE )
+b2.place(x = 152, y = 0) 
+b3 = Button(framebaixo,command= lambda: entrada('/') , text = '/', width= 9, height=4, bg= cor5, fg=cor4, font = ('Ivy 10 bold '), relief= RAISED, overrelief=RIDGE )
+b3.place(x = 228, y = 0)
+
+b4 = Button(framebaixo, command= lambda: entrada('7') , text = '7', width= 9, height=4, bg= cor3, fg=cor4, font = ('Ivy 10 bold '), relief= RAISED, overrelief=RIDGE )
+b4.place(x = 0, y = 73) 
+b5 = Button(framebaixo,command= lambda: entrada('8') , text = '8', width= 9, height=4, bg= cor3, fg=cor4, font = ('Ivy 10 bold '), relief= RAISED, overrelief=RIDGE )
+b5.place(x = 76, y = 73)
+b6 = Button(framebaixo,command= lambda: entrada('9') , text = '9', width= 9, height=4, bg= cor3, fg=cor4, font = ('Ivy 10 bold '), relief= RAISED, overrelief=RIDGE )
+b6.place(x = 152, y = 73) 
+b7 = Button(framebaixo,command= lambda: entrada('*') , text = '*', width= 9, height=4, bg= cor5, fg=cor4, font = ('Ivy 10 bold '), relief= RAISED, overrelief=RIDGE )
+b7.place(x = 228, y = 73)
+
+b8 = Button(framebaixo,command= lambda: entrada('4') , text = '4', width= 9, height=4, bg= cor3, fg=cor4, font = ('Ivy 10 bold '), relief= RAISED, overrelief=RIDGE )
+b8.place(x = 0, y = 146)
+b9 = Button(framebaixo,command= lambda: entrada('5') , text = '5', width= 9, height=4, bg= cor3, fg=cor4, font = ('Ivy 10 bold '), relief= RAISED, overrelief=RIDGE )
+b9.place(x = 76, y = 146)
+b10 = Button(framebaixo,command= lambda: entrada('6') , text = '6', width= 9, height=4, bg= cor3, fg=cor4, font = ('Ivy 10 bold '), relief= RAISED, overrelief=RIDGE )
+b10.place(x = 152, y = 146) 
+b11 = Button(framebaixo,command= lambda: entrada('-') , text = '-', width= 9, height=4, bg= cor5, fg=cor4, font = ('Ivy 10 bold '), relief= RAISED, overrelief=RIDGE )
+b11.place(x = 228, y = 146)
+
+b12 = Button(framebaixo,command= lambda: entrada('1') , text = '1', width= 9, height=4, bg= cor3, fg=cor4, font = ('Ivy 10 bold '), relief= RAISED, overrelief=RIDGE )
+b12.place(x = 0, y = 219) 
+b13 = Button(framebaixo,command= lambda: entrada('2') , text = '2', width= 9, height=4, bg= cor3, fg=cor4, font = ('Ivy 10 bold '), relief= RAISED, overrelief=RIDGE )
+b13.place(x = 76, y = 219)
+b14 = Button(framebaixo,command= lambda: entrada('3') , text = '3', width= 9, height=4, bg= cor3, fg=cor4, font = ('Ivy 10 bold '), relief= RAISED, overrelief=RIDGE )
+b14.place(x = 152, y = 219) 
+b15 = Button(framebaixo,command= lambda: entrada('+') , text = '+', width= 9, height=4, bg= cor5, fg=cor4, font = ('Ivy 10 bold '), relief= RAISED, overrelief=RIDGE )
+b15.place(x = 228, y = 219)
+
+b16 = Button(framebaixo,command= lambda: entrada('0') , text = '0', width= 20, height=4, bg= cor3, fg=cor4, font = ('Ivy 10 bold '), relief= RAISED, overrelief=RIDGE ) #Defini um botão com o texto "C", defini tamanho de largura e comprimento
+b16.place(x = 0, y = 292) # Colocando o botão nas cordenadas 0 x 0
+b17 = Button(framebaixo,command= lambda: entrada('.') , text = '.', width= 9, height=4, bg= cor3, fg=cor4, font = ('Ivy 10 bold '), relief= RAISED, overrelief=RIDGE )
+b17.place(x = 152, y = 292) 
+b18 = Button(framebaixo,command= lambda: calcular() , text = '=', width= 9, height=4, bg= cor5, fg=cor4, font = ('Ivy 10 bold '), relief= RAISED, overrelief=RIDGE )
+b18.place(x = 228, y = 292)#Usei a função "calcular" criada la em cima aqui no botão de '='
+
+
+janela.mainloop() #Abrindo a calculadora e deixando aberta
+
